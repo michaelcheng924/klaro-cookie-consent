@@ -3,6 +3,7 @@
 1. Make updates
 2. build code
 3. copy `klaro.js` into grocery `klaro.js`
+4. cookieconsentconfig.html is what is loaded into GTM (body tags are taken out). Make relevant updates there also
 
 # Klaro! A Simple Consent Manager
 
