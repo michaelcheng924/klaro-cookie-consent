@@ -8,7 +8,7 @@ consentNotice:
   testing: Testing mode!
   title: Cookie Consent
   changeDescription: There were changes since your last visit, please renew your consent.
-  description: 'Hi! Could we please enable some additional services for {purposes}? You can always change or withdraw your consent later.'
+  description: 'Hi!!! Could we please enable some additional services for {purposes}? You can always change or withdraw your consent later.'
   learnMore|capitalize: Let me choose
 purposes:
   functional:

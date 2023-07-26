@@ -2,7 +2,6 @@ import React from 'react';
 import { Close } from './icons';
 import Services from './services';
 import Purposes from './purposes';
-import Text from './text';
 
 export default class ConsentModal extends React.Component {
     componentDidMount() {
@@ -59,24 +58,18 @@ export default class ConsentModal extends React.Component {
             );
         let acceptAllButton;
         const acceptButton = (
-            <button
-                disabled={confirming}
-                className="cm-btn cm-btn-success cm-btn-info cm-btn-accept"
-                type="button"
-                onClick={saveAndHide}
-            >
-                {t([manager.confirmed ? 'save' : 'acceptSelected'])}
+            <button className="cm-button" type="button" onClick={saveAndHide}>
+                Confirm My Choices
             </button>
         );
         if (config.acceptAll && !manager.confirmed) {
             acceptAllButton = (
                 <button
-                    disabled={confirming}
-                    className="cm-btn cm-btn-success cm-btn-accept-all"
+                    className="cm-button"
                     type="button"
                     onClick={acceptAndHide}
                 >
-                    {t(['acceptAll'])}
+                    Allow All
                 </button>
             );
         }
@@ -116,57 +109,96 @@ export default class ConsentModal extends React.Component {
             );
 
         const innerModal = (
-            <div className="cm-modal cm-klaro">
-                <div className="cm-header">
-                    {closeLink}
-                    <h1 className="title">
-                        <Text
-                            config={config}
-                            text={t(['consentModal', 'title'])}
-                        />
-                    </h1>
-                    <p>
-                        <Text
-                            config={config}
-                            text={[t(['consentModal', 'description'])].concat(
-                                (ppLink &&
-                                    [' '].concat(
-                                        t(['privacyPolicy', 'text'], {
-                                            privacyPolicy: ppLink,
-                                        })
-                                    )) ||
-                                    []
-                            )}
-                        />
-                    </p>
-                </div>
-                <div className="cm-body">{servicesOrPurposes}</div>
-                <div className="cm-footer">
-                    <div className="cm-footer-buttons">
-                        {declineButton}
-                        {acceptButton}
-                        {acceptAllButton}
+            <div
+                className="cm-modal cm-klaro"
+                style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'space-between',
+                }}
+            >
+                <div>
+                    <div
+                        style={{
+                            display: 'flex',
+                            justifyContent: 'flex-end',
+                            marginTop: 20,
+                            marginRight: 24,
+                        }}
+                    >
+                        {closeLink}
                     </div>
-                    {!config.disablePoweredBy && (
-                        <p className="cm-powered-by">
+                    <hr
+                        style={{
+                            marginTop: 20,
+                            marginBottom: 24,
+                        }}
+                    />
+                    <div className="cm-header">
+                        <div
+                            style={{
+                                color: '#2C3337',
+                                fontWeight: 'bold',
+                                fontSize: 16,
+                                marginBottom: 16,
+                            }}
+                        >
+                            Privacy Preferences
+                        </div>
+                        <p
+                            style={{
+                                fontSize: 12,
+                                color: '#6C7275',
+                                marginBottom: 24,
+                            }}
+                        >
+                            We use cookies that may store or retrieve
+                            information on your browser. While some cookies are
+                            required to operate this site or app, others ensure
+                            a more personalized user experience.  If you choose,
+                            click on the different category headings to find out
+                            more and change our default settings. However,
+                            blocking some types of cookies may impact your
+                            experience of the site and the services we are able
+                            to offer. For more information visit our{' '}
                             <a
-                                target="_blank"
-                                href={
-                                    config.poweredBy ||
-                                    'https://kiprotect.com/klaro'
-                                }   
-                                rel="noopener"
+                                href="https://www.gianteagle.com/privacy-notice"
+                                id="cookie-consent-link"
                             >
-                                {t(['poweredBy'])}
+                                Privacy Notice
                             </a>
+                            .
                         </p>
-                    )}
+                    </div>
+                    <div className="cm-body">{servicesOrPurposes}</div>
+                </div>
+                <div>
+                    <hr
+                        style={{
+                            margin: 0,
+                        }}
+                    />
+                    <div
+                        className="cm-footer"
+                        style={{
+                            border: 0,
+                        }}
+                    >
+                        <div className="cm-footer-buttons">
+                            {acceptButton}
+                            {/* {declineButton} */}
+                        </div>
+                    </div>
                 </div>
             </div>
         );
 
         if (embedded)
-            return <div id="cookieScreen" className="cookie-modal cm-embedded">{innerModal}</div>;
+            return (
+                <div id="cookieScreen" className="cookie-modal cm-embedded">
+                    {innerModal}
+                </div>
+            );
 
         return (
             <div id="cookieScreen" className="cookie-modal">

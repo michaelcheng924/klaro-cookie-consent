@@ -2,6 +2,7 @@ import React from 'react';
 import { ServiceItems } from './services';
 import { asTitle } from '../utils/strings';
 import Text from './text';
+import { Plus, Minus } from './icons';
 
 export default class PurposeItem extends React.Component {
     constructor(props) {
@@ -26,6 +27,7 @@ export default class PurposeItem extends React.Component {
             title,
             description,
             t,
+            isStrictlyNecessary,
         } = this.props;
         const { servicesVisible } = this.state;
         const required = this.props.required || false;
@@ -104,57 +106,135 @@ export default class PurposeItem extends React.Component {
             />
         );
 
-        const descriptionText =
+        let descriptionText =
             description || t(['!', 'purposes', name, 'description']);
+
+        if (isStrictlyNecessary) {
+            descriptionText =
+                'These cookies are necessary for the website to function (e.g. navigation of the website) and cannot be switched off in our systems. These cookies do not store any personally identifiable information. You cannot opt-out of these cookies.';
+        }
+
+        const toggleTitle = (
+            <span
+                className="cm-list-title"
+                id={`${titleid}`}
+                style={{
+                    cursor: 'pointer',
+                    color: '#2C3337',
+                    position: 'relative',
+                    cursor: 'pointer',
+                    fontSize: 14,
+                    fontWeight: 400,
+                }}
+            >
+                {title || t(['!', 'purposes', name, 'title?']) || asTitle(name)}
+            </span>
+        );
 
         return (
             <React.Fragment>
-                <input
-                    id={id}
-                    className={
-                        'cm-list-input' +
-                        (required ? ' required' : '') +
-                        (!allEnabled
-                            ? onlyRequiredEnabled
-                                ? ' only-required'
-                                : ' half-checked'
-                            : '')
-                    }
-                    aria-labelledby={`${titleid}`}
-                    aria-describedby={`${id}-description`}
-                    disabled={required}
-                    checked={
-                        allEnabled || (!allDisabled && !onlyRequiredEnabled)
-                    }
-                    type="checkbox"
-                    onChange={onChange}
-                />
-                <label
-                    htmlFor={id}
-                    className="cm-list-label"
-                    {...(required ? { tabIndex: '0' } : {})}
+                <div
+                    style={{
+                        padding: '20px 18px',
+                    }}
                 >
-                    <span className="cm-list-title" id={`${titleid}`}>
-                        {title ||
-                            t(['!', 'purposes', name, 'title?']) ||
-                            asTitle(name)}
-                    </span>
-                    {requiredText}
-                    <span className="cm-switch">
-                        <div className="slider round active"></div>
-                    </span>
-                </label>
-                <div id={`${id}-description`}>
-                    {descriptionText && (
-                        <p className="cm-list-description">
-                            <Text config={config} text={descriptionText} />
-                        </p>
+                    {!isStrictlyNecessary && (
+                        <input
+                            id={id}
+                            className={
+                                'cm-list-input' +
+                                (required ? ' required' : '') +
+                                (!allEnabled
+                                    ? onlyRequiredEnabled
+                                        ? ' only-required'
+                                        : ' half-checked'
+                                    : '')
+                            }
+                            aria-labelledby={`${titleid}`}
+                            aria-describedby={`${id}-description`}
+                            disabled={required}
+                            checked={
+                                allEnabled ||
+                                (!allDisabled && !onlyRequiredEnabled)
+                            }
+                            type="checkbox"
+                            role="switch"
+                            onChange={onChange}
+                        />
                     )}
-                    {purposesContent}
+                    <label
+                        htmlFor={id}
+                        className="cm-list-label"
+                        {...(required ? { tabIndex: '0' } : {})}
+                    >
+                        {servicesVisible ? (
+                            <button
+                                onClick={toggleServicesVisible}
+                                style={{
+                                    cursor: 'pointer',
+                                    padding: '0 !important',
+                                    background: '#fff',
+                                    border: 0,
+                                }}
+                            >
+                                <Minus />
+                                {toggleTitle}
+                            </button>
+                        ) : (
+                            <button
+                                onClick={toggleServicesVisible}
+                                style={{
+                                    cursor: 'pointer',
+                                    padding: '0 !important',
+                                    background: '#fff',
+                                    border: 0,
+                                }}
+                            >
+                                <Plus />
+                                {toggleTitle}
+                            </button>
+                        )}
+
+                        {requiredText}
+                        {!isStrictlyNecessary && (
+                            <span className="cm-switch">
+                                <div className="slider round active"></div>
+                            </span>
+                        )}
+                    </label>
+                    {isStrictlyNecessary && (
+                        <div
+                            style={{
+                                color: '#C8102E',
+                                fontWeight: 'bold',
+                                position: 'absolute',
+                                right: 8,
+                                top: 20,
+                                fontSize: 10,
+                            }}
+                        >
+                            Always Active
+                        </div>
+                    )}
+                    {/* <div id={`${id}-description`}>
+                        {descriptionText && (
+                            <p className="cm-list-description">
+                                <Text config={config} text={descriptionText} />
+                            </p>
+                        )}
+                        {purposesContent}
+                    </div> */}
                 </div>
-                {services.length > 0 && (
-                    <div className="cm-services">
-                        <div className="cm-caret">
+
+                {/* {services.length > 0 && ( */}
+                <div
+                    className="cm-services"
+                    style={{
+                        background: '#F8F8F8',
+                        padding: servicesVisible ? 16 : 0,
+                    }}
+                >
+                    {/* <div className="cm-caret">
                             <a
                                 href="#"
                                 aria-haspopup="true"
@@ -174,17 +254,27 @@ export default class PurposeItem extends React.Component {
                                         : 'service',
                                 ])}
                             </a>
-                        </div>
-                        <ul
-                            className={
-                                'cm-content' +
-                                (servicesVisible ? ' expanded' : '')
-                            }
-                        >
-                            {serviceItems}
-                        </ul>
+                        </div> */}
+                    <div
+                        className={
+                            'cm-content' + (servicesVisible ? ' expanded' : '')
+                        }
+                    >
+                        {/* {serviceItems} */}
+                        {descriptionText && (
+                            <p
+                                style={{
+                                    color: '#6c7275',
+                                    fontSize: 12,
+                                    margin: 0,
+                                }}
+                            >
+                                {descriptionText}
+                            </p>
+                        )}
                     </div>
-                )}
+                </div>
+                {/* )} */}
             </React.Fragment>
         );
     }

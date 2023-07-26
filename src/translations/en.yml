@@ -3,67 +3,64 @@ acceptAll: Accept all
 acceptSelected: Accept selected
 close: Close
 consentModal:
-    description:
-        Here you can assess and customize the services that we'd like to use
-        on this website. You're in charge! Enable or disable services as you see fit.
-    title: Services we would like to use
+  description:
+    Here you can assess and customize the services that we'd like to use
+    on this website. You're in charge! Enable or disable services as you see fit.
+  title: Services we would like to use
 consentNotice:
-    changeDescription: There were changes since your last visit, please renew your consent.
-    title: Cookie Consent
-    description:
-        Hi! Could we please enable some additional services for {purposes}?
-        You can always change or withdraw your consent later.
-    learnMore: Let me choose
-    testing: Testing mode!
+  changeDescription: There were changes since your last visit, please renew your consent.
+  title: Cookie Consent
+  description:
+    Hi!!! Could we please enable some additional services for {purposes}?
+    You can always change or withdraw your consent later.
+  learnMore: Manage Preferences
+  testing: Testing mode!
 contextualConsent:
-    acceptAlways: Always
-    acceptOnce: 'Yes'
-    description: Do you want to load external content supplied by {title}?
+  acceptAlways: Always
+  acceptOnce: 'Yes'
+  description: Do you want to load external content supplied by {title}?
 decline: I decline
 ok: That's ok
 poweredBy: Realized with Klaro!
 privacyPolicy:
-    name: privacy policy
-    text: To learn more, please read our {privacyPolicy}.
+  name: privacy policy
+  text: To learn more, please read our {privacyPolicy}.
 purposeItem:
-    service: service
-    services: services
+  service: service
+  services: services
 purposes:
-    advertising:
-        description:
-            These services process personal information to show you personalized
-            or interest-based advertisements.
-        title: Advertising
-    functional:
-        description:
-            'These services are essential for the correct functioning of this
-            website. You cannot disable them here as the service would not work correctly
-            otherwise.
-
-            '
-        title: Service Provision
-    marketing:
-        description:
-            These services process personal information to show you relevant
-            content about products, services or topics that you might be interested in.
-        title: Marketing
-    performance:
-        description:
-            'These services process personal information to optimize the service
-            that this website offers.
-
-            '
-        title: Performance Optimization
+  advertising:
+    description:
+      These services process personal information to show you personalized
+      or interest-based advertisements.
+    title: Advertising
+  functional:
+    description: 'These cookies enable the website to provide enhanced functionality and personalization. They may be set by us or by our third party providers whose services we have added to our pages.  If you do not allow these cookies then some or all of the services may not function properly.'
+    title: Functional Cookies
+  marketing:
+    description:
+      These services process personal information to show you relevant
+      content about products, services or topics that you might be interested in.
+    title: Marketing
+  performance:
+    description: 'These cookies allow us to count visits and traffic sources so we can measure and improve the performance of our site. They help us to know which pages are the most and least popular and see how visitors move around the site. All information these cookies collect is aggregated and therefore anonymous. If you do not allow these cookies we will not know when you have visited our site, and will not be able to monitor its performance.'
+    title: Performance Cookies
+  targeting:
+    description: 'These cookies are used to make advertising messages more relevant to you and may be set through our site by us or by our advertising partners.  They may be used to track visitors and display ads that are relevant and engaging for individual users.  They do not store directly personal information, but are based on uniquely identifying your browser and internet device. If you do not allow these cookies, you will experience less targeted advertising.'
+    title: Targeting Cookies
+  socialmedia:
+    description: 'These cookies are set by a range of social media services on our site to enable you to share our content with your friends and networks. They are capable of tracking your browser across other sites and building up a profile of your interests. This may impact the content and messages you see on other websites you visit. If you do not allow these cookies you may not be able to use or see these sharing tools.'
+    title: Social Media Cookies
 save: Save
 service:
-    disableAll:
-        description: Use this switch to enable or disable all services.
-        title: Enable or disable all services
-    optOut:
-        description: This services is loaded by default (but you can opt out)
-        title: (opt-out)
-    purpose: purpose
-    purposes: purposes
-    required:
-        description: This services is always required
-        title: (always required)
+  disableAll:
+    description: Use this switch to enable or disable all services.
+    title: Enable or disable all services
+  optOut:
+    description: This services is loaded by default (but you can opt out)
+    title: (opt-out)
+  purpose: purpose
+  purposes: purposes
+  required:
+    description: This services is always required
+    title: (always required)

@@ -52,6 +52,64 @@ export default class ConsentNotice extends React.Component {
         } else {
             this.props.hide();
         }
+
+        window.mParticle.logEvent(
+            'Cookie Consent',
+            mParticle.EventType.UserPreference,
+            {
+                Performance: this.props.manager.consents.analytics_storage
+                    ? 'yes'
+                    : 'no',
+                Functional: this.props.manager.consents.functionality_storage
+                    ? 'yes'
+                    : 'no',
+                Targeting: this.props.manager.consents.ad_storage
+                    ? 'yes'
+                    : 'no',
+                hardwareId: window.mParticle.getDeviceId(),
+                hostname: window.location.hostname,
+            }
+        );
+
+        // GPDR CONSENT
+        var user = mParticle.Identity.getCurrentUser();
+        // Create consents for different purposes (in this case, location and parental consent purposes)
+        var analytics_storage = mParticle.Consent.createGDPRConsent(
+            this.props.manager.consents.analytics_storage, // Consented
+            Date.now(), // Timestamp
+            '', // Document
+            '', // Location
+            window.mParticle.getDeviceId() // Hardware ID
+        );
+
+        var functionality_storage = mParticle.Consent.createGDPRConsent(
+            this.props.manager.consents.functionality_storage, // Consented
+            Date.now(), // Timestamp
+            '', // Document
+            '', // Location
+            window.mParticle.getDeviceId() // Hardware ID
+        );
+
+        var ad_storage = mParticle.Consent.createGDPRConsent(
+            this.props.manager.consents.ad_storage, // Consented
+            Date.now(), // Timestamp
+            '', // Document
+            '', // Location
+            window.mParticle.getDeviceId() // Hardware ID
+        );
+
+        // Add to your consent state
+        var consentState = mParticle.Consent.createConsentState();
+        consentState.addGDPRConsentState(
+            'analytics_storage',
+            analytics_storage
+        );
+        consentState.addGDPRConsentState(
+            'functionality_storage',
+            functionality_storage
+        );
+        consentState.addGDPRConsentState('ad_storage', ad_storage);
+        user.setConsentState(consentState);
     };
 
     saveAndHide = () => {
@@ -143,21 +201,21 @@ export default class ConsentNotice extends React.Component {
             ''
         ) : (
             <button
-                className="cm-btn cm-btn-danger cn-decline"
+                className="cm-button cm-button-decline"
                 type="button"
                 onClick={this.declineAndHide}
             >
-                {t(['decline'])}
+                Reject All
             </button>
         );
 
         const acceptButton = config.acceptAll ? (
             <button
-                className="cm-btn cm-btn-success"
+                className="cm-button"
                 type="button"
                 onClick={this.acceptAndHide}
             >
-                {t(['ok'])}
+                Accept All Cookies
             </button>
         ) : (
             <button
@@ -169,26 +227,16 @@ export default class ConsentNotice extends React.Component {
             </button>
         );
 
-        const learnMoreLink = () =>
-            noticeAsModal ? (
-                <button
-                    key="learnMoreLink"
-                    className="cm-btn cm-btn-lern-more cm-btn-info"
-                    type="button"
-                    onClick={showModal}
-                >
-                    {t(['consentNotice', 'learnMore'])}
-                </button>
-            ) : (
-                <a
-                    key="learnMoreLink"
-                    className="cm-link cn-learn-more"
-                    href="#"
-                    onClick={showModal}
-                >
-                    {t(['consentNotice', 'learnMore'])}
-                </a>
-            );
+        const learnMoreLink = () => (
+            <button
+                key="learnMoreLink"
+                className="cm-button cm-button-decline cm-button-manage"
+                type="button"
+                onClick={showModal}
+            >
+                Cookie Settings
+            </button>
+        );
 
         let ppLink;
 
@@ -234,32 +282,56 @@ export default class ConsentNotice extends React.Component {
                 } ${noticeAsModal ? 'cookie-modal-notice' : ''} ${
                     embedded ? 'cn-embedded' : ''
                 }`}
+                style={{
+                    background: '#fff',
+                    boxSizing: 'border-box',
+                    bottom: 24,
+                    boxShadow: '0px 4px 24px rgba(0, 0, 0, 0.08)',
+                    left: 24,
+                    padding: '24px 24px 16px',
+                    position: 'fixed',
+                    top: 'inherit',
+                    width: 375,
+                }}
             >
                 <div className="cn-body">
-                    {t(['!', 'consentNotice', 'title']) && (
-                        <h2 id="id-cookie-title">
-                            {t(['consentNotice', 'title'])}
-                        </h2>
-                    )}
-                    <p id="id-cookie-notice">
-                        <Text
-                            config={config}
-                            text={t(['consentNotice', 'description'], {
-                                purposes: (
-                                    <strong key="strong">{purposesText}</strong>
-                                ),
-                                privacyPolicy: ppLink,
-                                learnMoreLink: learnMoreLink(),
-                            })}
-                        />
+                    <div
+                        style={{
+                            color: '#2C3337',
+                            fontSize: 16,
+                            fontWeight: 'bold',
+                            marginBottom: 16,
+                        }}
+                    >
+                        Your Privacy
+                    </div>
+                    <p
+                        style={{
+                            color: '#6c7275',
+                            fontSize: 12,
+                            margin: 0,
+                        }}
+                    >
+                        This website uses cookies for purposes of site
+                        operation, analyzing site traffic and personalizing
+                        content and ads as described in our{' '}
+                        <a
+                            href="https://www.gianteagle.com/privacy-notice"
+                            id="cookie-consent-link"
+                        >
+                            Privacy Notice
+                        </a>
+                        . You may choose to consent to our use of cookies,
+                        reject non-essential cookies, or further manage your
+                        preferences by clicking “Cookies Settings”.
                     </p>
                     {testing && <p>{t(['consentNotice', 'testing'])}</p>}
-                    {changesText}
+                    {/* {changesText} */}
                     <div className="cn-ok">
-                        {!hideLearnMore && learnMoreLink()}
                         <div className="cn-buttons">
-                            {declineButton}
                             {acceptButton}
+                            {declineButton}
+                            {!hideLearnMore && learnMoreLink()}
                         </div>
                     </div>
                 </div>

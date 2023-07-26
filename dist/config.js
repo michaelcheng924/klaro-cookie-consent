@@ -204,132 +204,150 @@ var klaroConfig = {
     // This is a list of third-party services that Klaro will manage for you.
     services: [
         {
-            name: 'twitter',
-            default: false,
-            contextualConsentOnly: true,
-            purposes: ['marketing'],
-        },
-        {
-            name: 'youtube',
+            name: 'analytics_storage',
             default: true,
-            purposes: ['marketing'],
+            purposes: ['performance'],
         },
         {
-            // Each service should have a unique (and short) name.
-            name: 'matomo',
-
-            // If "default" is set to true, the service will be enabled by default
-            // Overwrites global "default" setting.
-            // We recommend leaving this to "false" for services that collect
-            // personal information.
+            name: 'functionality_storage',
             default: true,
-
-            // The title of your service as listed in the consent modal.
-            title: 'Matomo/Piwik',
-
-            // The purpose(s) of this service. Will be listed on the consent notice.
-            // Do not forget to add translations for all purposes you list here.
-            purposes: ['analytics'],
-
-            // A list of regex expressions or strings giving the names of
-            // cookies set by this service. If the user withdraws consent for a
-            // given service, Klaro will then automatically delete all matching
-            // cookies.
-            cookies: [
-                // you can also explicitly provide a path and a domain for
-                // a given cookie. This is necessary if you have services that
-                // set cookies for a path that is not "/" or a domain that
-                // is not the current domain. If you do not set these values
-                // properly, the cookie can't be deleted by Klaro
-                // (there is no way to access the path or domain of a cookie in JS)
-                // Notice that it is not possible to delete cookies that were set
-                // on a third-party domain! See the note at mdn:
-                // https://developer.mozilla.org/en-US/docs/Web/API/Document/cookie#new-cookie_domain
-                [/^_pk_.*$/, '/', 'klaro.kiprotect.com'], //for the production version
-                [/^_pk_.*$/, '/', 'localhost'], //for the local version
-                'piwik_ignore',
-            ],
-
-            // An optional callback function that will be called each time
-            // the consent state for the service changes (true=consented). Passes
-            // the `service` config as the second parameter as well.
-            callback: function(consent, service) {
-                // This is an example callback function.
-                console.log(
-                    'User consent for service ' + service.name + ': consent=' + consent
-                );
-                // To be used in conjunction with Matomo 'requireCookieConsent' Feature, Matomo 3.14.0 or newer
-                // For further Information see https://matomo.org/faq/new-to-piwik/how-can-i-still-track-a-visitor-without-cookies-even-if-they-decline-the-cookie-consent/
-                /*
-                if(consent==true){
-                    _paq.push(['rememberCookieConsentGiven']);
-                } else {
-                    _paq.push(['forgetCookieConsentGiven']);
-                }
-                */
-            },
-
-            // If "required" is set to true, Klaro will not allow this service to
-            // be disabled by the user.
-            required: false,
-
-            // If "optOut" is set to true, Klaro will load this service even before
-            // the user gave explicit consent.
-            // We recommend always leaving this "false".
-            optOut: false,
-
-            // If "onlyOnce" is set to true, the service will only be executed
-            // once regardless how often the user toggles it on and off.
-            onlyOnce: true,
-        },
-
-        // The services will appear in the modal in the same order as defined here.
-        {
-            name: 'inlineTracker',
-            title: 'Inline Tracker',
-            purposes: ['analytics'],
-            cookies: ['inline-tracker'],
-            optOut: false,
+            purposes: ['functional'],
         },
         {
-            name: 'externalTracker',
-            title: 'External Tracker',
-            purposes: ['analytics', 'security'],
-            cookies: ['external-tracker'],
-        },
-        {
-            name: 'intercom',
-            title: 'Intercom',
+            name: 'ad_storage',
             default: true,
-            purposes: ['livechat'],
+            purposes: ['targeting'],
         },
-        {
-            name: 'mouseflow',
-            title: 'Mouseflow',
-            purposes: ['analytics'],
-        },
-        {
-            name: 'adsense',
-            // if you omit the title here Klaro will try to look it up in the
-            // translations
-            //title: 'Google AdSense',
-            purposes: ['advertising'],
-        },
-        {
-            name: 'camera',
-            title: 'Surveillance Camera',
-            purposes: ['security'],
-        },
-/*        {
-            name: 'googleFonts',
-            title: 'Google Fonts',
-            purposes: ['styling'],
-        },*/
-        {
-            name: 'cloudflare',
-            title: 'Cloudflare',
-            purposes: ['security'],
-            required: true,
-        },
+        // {
+        //     name: 'twitter',
+        //     default: false,
+        //     contextualConsentOnly: true,
+        //     purposes: ['marketing'],
+        // },
+        // {
+        //     name: 'youtube',
+        //     default: true,
+        //     purposes: ['marketing'],
+        // },
+        // {
+        //     // Each service should have a unique (and short) name.
+        //     name: 'matomo',
+
+        //     // If "default" is set to true, the service will be enabled by default
+        //     // Overwrites global "default" setting.
+        //     // We recommend leaving this to "false" for services that collect
+        //     // personal information.
+        //     default: true,
+
+        //     // The title of your service as listed in the consent modal.
+        //     title: 'Matomo/Piwik',
+
+        //     // The purpose(s) of this service. Will be listed on the consent notice.
+        //     // Do not forget to add translations for all purposes you list here.
+        //     purposes: ['analytics'],
+
+        //     // A list of regex expressions or strings giving the names of
+        //     // cookies set by this service. If the user withdraws consent for a
+        //     // given service, Klaro will then automatically delete all matching
+        //     // cookies.
+        //     cookies: [
+        //         // you can also explicitly provide a path and a domain for
+        //         // a given cookie. This is necessary if you have services that
+        //         // set cookies for a path that is not "/" or a domain that
+        //         // is not the current domain. If you do not set these values
+        //         // properly, the cookie can't be deleted by Klaro
+        //         // (there is no way to access the path or domain of a cookie in JS)
+        //         // Notice that it is not possible to delete cookies that were set
+        //         // on a third-party domain! See the note at mdn:
+        //         // https://developer.mozilla.org/en-US/docs/Web/API/Document/cookie#new-cookie_domain
+        //         [/^_pk_.*$/, '/', 'klaro.kiprotect.com'], //for the production version
+        //         [/^_pk_.*$/, '/', 'localhost'], //for the local version
+        //         'piwik_ignore',
+        //     ],
+
+        //     // An optional callback function that will be called each time
+        //     // the consent state for the service changes (true=consented). Passes
+        //     // the `service` config as the second parameter as well.
+        //     callback: function (consent, service) {
+        //         // This is an example callback function.
+        //         console.log(
+        //             'User consent for service ' +
+        //                 service.name +
+        //                 ': consent=' +
+        //                 consent
+        //         );
+        //         // To be used in conjunction with Matomo 'requireCookieConsent' Feature, Matomo 3.14.0 or newer
+        //         // For further Information see https://matomo.org/faq/new-to-piwik/how-can-i-still-track-a-visitor-without-cookies-even-if-they-decline-the-cookie-consent/
+        //         /*
+        //         if(consent==true){
+        //             _paq.push(['rememberCookieConsentGiven']);
+        //         } else {
+        //             _paq.push(['forgetCookieConsentGiven']);
+        //         }
+        //         */
+        //     },
+
+        //     // If "required" is set to true, Klaro will not allow this service to
+        //     // be disabled by the user.
+        //     required: false,
+
+        //     // If "optOut" is set to true, Klaro will load this service even before
+        //     // the user gave explicit consent.
+        //     // We recommend always leaving this "false".
+        //     optOut: false,
+
+        //     // If "onlyOnce" is set to true, the service will only be executed
+        //     // once regardless how often the user toggles it on and off.
+        //     onlyOnce: true,
+        // },
+
+        // // The services will appear in the modal in the same order as defined here.
+        // {
+        //     name: 'inlineTracker',
+        //     title: 'Inline Tracker',
+        //     purposes: ['analytics'],
+        //     cookies: ['inline-tracker'],
+        //     optOut: false,
+        // },
+        // {
+        //     name: 'externalTracker',
+        //     title: 'External Tracker',
+        //     purposes: ['analytics', 'security'],
+        //     cookies: ['external-tracker'],
+        // },
+        // {
+        //     name: 'intercom',
+        //     title: 'Intercom',
+        //     default: true,
+        //     purposes: ['livechat'],
+        // },
+        // {
+        //     name: 'mouseflow',
+        //     title: 'Mouseflow',
+        //     purposes: ['analytics'],
+        // },
+        // {
+        //     name: 'adsense',
+        //     // if you omit the title here Klaro will try to look it up in the
+        //     // translations
+        //     //title: 'Google AdSense',
+        //     purposes: ['advertising'],
+        // },
+        // {
+        //     name: 'camera',
+        //     title: 'Surveillance Camera',
+        //     purposes: ['security'],
+        // },
+        // /*        {
+        //     name: 'googleFonts',
+        //     title: 'Google Fonts',
+        //     purposes: ['styling'],
+        // },*/
+        // {
+        //     name: 'cloudflare',
+        //     title: 'Cloudflare',
+        //     purposes: ['security'],
+        //     required: true,
+        // },
     ],
 };

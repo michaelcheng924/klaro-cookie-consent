@@ -74,7 +74,7 @@ export default class ServiceItem extends React.Component {
 
         return (
             <div>
-                <input
+                {/* <input
                     id={id}
                     className={
                         'cm-list-input' +
@@ -90,9 +90,9 @@ export default class ServiceItem extends React.Component {
                     tabIndex={visible ? '0' : '-1'}
                     type="checkbox"
                     onChange={onChange}
-                />
+                /> */}
                 <label
-                    htmlFor={id}
+                    // htmlFor={id}
                     className="cm-list-label"
                     {...(required ? { tabIndex: '0' } : {})}
                 >
@@ -104,9 +104,9 @@ export default class ServiceItem extends React.Component {
                     </span>
                     {requiredText}
                     {optOutText}
-                    <span className="cm-switch">
+                    {/* <span className="cm-switch">
                         <div className="slider round active"></div>
-                    </span>
+                    </span> */}
                 </label>
                 <div id={`${id}-description`}>
                     {descriptionText && (

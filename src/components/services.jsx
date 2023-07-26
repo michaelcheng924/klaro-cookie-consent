@@ -97,7 +97,7 @@ export default class Services extends React.Component {
         return (
             <ul className="cm-services">
                 {serviceItems}
-                {!config.hideToggleAll && togglableServices.length > 1 && (
+                {/* {!config.hideToggleAll && togglableServices.length > 1 && (
                     <li className="cm-service cm-toggle-all">
                         <ServiceItem
                             name="disableAll"
@@ -115,7 +115,7 @@ export default class Services extends React.Component {
                             t={t}
                         />
                     </li>
-                )}
+                )} */}
             </ul>
         );
     }

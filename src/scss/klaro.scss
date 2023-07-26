@@ -2,7 +2,6 @@
 @import './vars';
 
 .klaro {
-
     $btn-margin-right: 0.5em;
 
     @include var(font-family, font-family);
@@ -11,7 +10,7 @@
     // buttons use their own font-family setting so we need to override it explicitly...
     button {
         @include var(font-family, font-family);
-        @include var(font-size, font-size);    
+        @include var(font-size, font-size);
     }
 
     &.cm-as-context-notice {
@@ -52,7 +51,6 @@
             text-align: left;
             margin: 0;
             padding: 0;
-            margin-top: 0.7em;
         }
 
         h1,
@@ -70,7 +68,6 @@
         }
 
         .cm-btn {
-
             @include var(color, button-text-color);
             @include var(background-color, dark2);
             @include var(border-radius, border-radius);
@@ -150,7 +147,7 @@
     }
 
     .cookie-modal {
-        width: 100%;
+        width: 500px;
         height: 100%;
         position: fixed;
         overflow: hidden;
@@ -182,15 +179,16 @@
         }
 
         .cm-modal {
+            height: 100vh !important;
+
             &.cm-klaro {
-                @include modal(660px, 640px);
+                @include modal(660px, 375px);
             }
 
             .hide {
                 border-style: none;
                 background: none;
                 cursor: pointer;
-                position: absolute;
                 top: 20px;
                 right: 20px;
                 z-index: 1;
@@ -205,7 +203,7 @@
                 @include var(border-top-width, border-width);
                 @include var(border-top-style, border-style);
 
-                padding: 1em;
+                padding: 0 24px 24px;
 
                 &-buttons {
                     display: flex;
@@ -226,11 +224,7 @@
             }
 
             .cm-header {
-                @include var(border-bottom-width, border-width);
-                @include var(border-bottom-style, border-style);
-                @include var(border-bottom-color, dark2);
-
-                padding: 1em;
+                padding-left: 24px;
                 padding-right: 24px;
 
                 h1 {
@@ -245,7 +239,9 @@
             }
 
             .cm-body {
-                padding: 1em;
+                border: 1px solid #ededed;
+                margin-left: 24px;
+                margin-right: 24px;
 
                 ul {
                     display: block;
@@ -268,11 +264,11 @@
                             }
 
                             .cm-content {
-                                margin-left: -40px;
+                                color: #6c7275;
                                 display: none;
+                                font-size: 12px;
 
                                 &.expanded {
-                                    margin-top: 10px;
                                     display: block;
                                 }
                             }
@@ -284,8 +280,8 @@
                         position: relative;
                         line-height: 20px;
                         vertical-align: middle;
-                        padding-left: 60px;
                         min-height: 40px;
+                        border-bottom: 1px solid #ededed;
 
                         &:first-child {
                             margin-top: 0;
@@ -301,7 +297,6 @@
                         }
 
                         &.cm-toggle-all {
-
                             @include var(border-top-width, border-width);
                             @include var(border-top-style, border-style);
                             @include var(border-top-color, dark2);
@@ -325,29 +320,33 @@
         }
     }
 
+    #id-cookie-title {
+        color: #2c3337;
+        font-weight: bold;
+    }
+
     .cookie-notice:not(.cookie-modal-notice) {
-        @include var(background-color, dark1);
-        z-index: 999;
-
+        background: #fff;
+        box-sizing: border-box;
+        bottom: 32px;
+        box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.08);
+        left: 32px;
+        outline: none;
+        padding: 24px 24px 16px;
         position: fixed;
-        width: 100%;
-        bottom: 0;
-        right: 0;
+        width: 375px;
+        z-index: 10000;
 
-        @media (min-width: $cm-desktop) {
-            @include var(border-radius, border-radius);
-            @include var(position, notice-position);
-            @include var(right, notice-right);
-            @include var(left, notice-left);
-            @include var(bottom, notice-bottom);
-            @include var(top, notice-top);
-            @include var(max-width, notice-max-width);
-            box-shadow: $cm-box-shadow-dark-md;
+        @media (max-width: 900px) {
+            bottom: 16px !important;
+            left: 16px !important;
         }
 
-        @media (max-width: ($cm-desktop - 1)) {
-            border-style: none;
-            border-radius: 0;
+        @media (max-width: 400px) {
+            bottom: 0 !important;
+            box-shadow: 0px -1px 10px rgba(0, 0, 0, 0.08) !important;
+            left: 0 !important;
+            width: 100vw !important;
         }
 
         &.cn-embedded {
@@ -369,7 +368,6 @@
             margin-right: 0;
             bottom: 0;
 
-            padding: 1em;
             padding-top: 0;
 
             p {
@@ -409,7 +407,7 @@
                 display: flex;
                 flex-flow: row;
                 flex-wrap: wrap;
-                justify-content: right;
+                justify-content: center;
                 align-items: baseline;
 
                 a,
@@ -439,4 +437,37 @@
     .cookie-notice-hidden {
         display: none !important;
     }
+}
+
+.cm-button {
+    border: none;
+    color: #fff;
+    margin-top: 24px;
+    display: flex;
+    flex-direction: row;
+    font-weight: bold;
+    justify-content: center;
+    align-items: center;
+    padding: 12px 24px;
+    gap: 10px;
+    width: 327px;
+    height: 48px;
+    background: linear-gradient(180deg, #ea2139 0%, #c8102e 100%);
+    border-radius: 80px;
+    flex: none;
+    order: 0;
+    align-self: stretch;
+    flex-grow: 0;
+    cursor: pointer;
+}
+
+.cm-button-decline {
+    background: #fff;
+    border: 1px solid #e5e5e3;
+    color: #2c3337;
+    margin-top: 8px;
+}
+
+.cm-button-manage {
+    border: none;
 }
